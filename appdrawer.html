@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>App Drawer with Real Icons</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('https://images.unsplash.com/photo-1606788075761-692d1f86fb6c') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .submenu {
+      display: none;
+    }
+
+    .submenu.active {
+      display: block;
+    }
+
+    .app-icon {
+      background-color: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      height: 3.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.4rem;
+    }
+  </style>
+</head>
+<body class="flex justify-center items-center min-h-screen">
+  <div class="w-[360px] h-[720px] bg-white bg-opacity-80 backdrop-blur-md rounded-[2rem] shadow-lg overflow-hidden flex flex-col relative">
+
+    <!-- Search Bar -->
+    <div class="p-4">
+      <input id="searchBox" type="text" placeholder="Search" class="w-full p-2 rounded-lg border shadow-md" oninput="filterApps()" />
+      <div id="searchResults" class="mt-2"></div>
+    </div>
+    <script>
+      // List of app names and icons (FontAwesome class)
+      const apps = [
+      { name: "Phone", icon: "fas fa-phone text-blue-600" },
+      { name: "Email", icon: "fas fa-envelope text-red-500" },
+      { name: "WhatsApp", icon: "fab fa-whatsapp text-green-500" },
+      { name: "Camera", icon: "fas fa-camera text-gray-700" },
+      { name: "Facebook", icon: "fab fa-facebook-f text-blue-600" },
+      { name: "Instagram", icon: "fab fa-instagram text-pink-500" },
+      { name: "Twitter", icon: "fab fa-x-twitter text-black" },
+      { name: "LinkedIn", icon: "fab fa-linkedin-in text-blue-700" },
+      { name: "Snapchat", icon: "fab fa-snapchat-ghost text-yellow-500" },
+      { name: "Reddit", icon: "fab fa-reddit-alien text-orange-500" },
+      { name: "Telegram", icon: "fab fa-telegram-plane text-blue-500" },
+      { name: "Messenger", icon: "fab fa-facebook-messenger text-blue-400" },
+      { name: "Discord", icon: "fab fa-discord text-indigo-600" },
+      { name: "WeChat", icon: "fab fa-weixin text-green-600" },
+      { name: "Calendar", icon: "far fa-calendar-alt text-indigo-600" },
+      { name: "Notes", icon: "fas fa-sticky-note text-yellow-500" },
+      { name: "Tasks", icon: "fas fa-check-circle text-green-600" },
+      { name: "Clipboard", icon: "fas fa-clipboard-list text-orange-500" },
+      { name: "Briefcase", icon: "fas fa-briefcase text-teal-600" },
+      { name: "Files", icon: "fas fa-file-alt text-gray-800" },
+      { name: "YouTube", icon: "fab fa-youtube text-red-600" },
+      { name: "Spotify", icon: "fab fa-spotify text-green-500" },
+      { name: "TV", icon: "fas fa-tv text-purple-600" },
+      { name: "Images", icon: "fas fa-image text-blue-500" },
+      { name: "Video", icon: "fas fa-video text-red-500" },
+      { name: "Gamepad", icon: "fas fa-gamepad text-black" },
+      { name: "Chess", icon: "fas fa-chess-knight text-indigo-500" },
+      { name: "Dice", icon: "fas fa-dice text-green-600" },
+      { name: "Wallet", icon: "fas fa-wallet text-amber-700" },
+      { name: "Chart", icon: "fas fa-chart-line text-emerald-600" },
+      { name: "Newspaper", icon: "fas fa-newspaper text-blue-600" },
+      { name: "Book Reader", icon: "fas fa-book-reader text-indigo-700" },
+      { name: "ReadMe", icon: "fab fa-readme text-orange-600" },
+      { name: "Book", icon: "fas fa-book text-red-500" }
+      ];
+
+      function filterApps() {
+      const query = document.getElementById('searchBox').value.trim();
+      const resultsDiv = document.getElementById('searchResults');
+      resultsDiv.innerHTML = '';
+      if (query.length === 0) return;
+
+      const firstChar = query[0].toLowerCase();
+      const filtered = apps.filter(app => app.name[0].toLowerCase() === firstChar);
+
+      if (filtered.length === 0) {
+        resultsDiv.innerHTML = '<div class="text-gray-500 text-sm">No apps found.</div>';
+        return;
+      }
+
+      resultsDiv.innerHTML = `
+        <div class="bg-gray-100 rounded-xl p-2 shadow-inner">
+        <div class="grid grid-cols-4 gap-2">
+          ${filtered.map(app => `
+          <div class="app-icon"><i class="${app.icon}"></i></div>
+          `).join('')}
+        </div>
+        </div>
+      `;
+      }
+    </script>
+
+    <!-- Recents -->
+    <div class="px-4">
+      <div class="bg-gray-100 p-2 rounded-xl shadow-inner">
+        <div class="text-sm font-semibold mb-2">Recents</div>
+        <div class="grid grid-cols-4 gap-2">
+          <div class="flex flex-col items-center">
+            <div class="app-icon mb-1" style="width:3.5rem; height:3.5rem; cursor:pointer;" onclick="showNotification('Phone')">
+              <i class="fas fa-phone text-blue-600"></i>
+            </div>
+            <span class="text-xs text-gray-700">Phone</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="app-icon mb-1" style="width:3.5rem; height:3.5rem; cursor:pointer;" onclick="showNotification('Email')">
+              <i class="fas fa-envelope text-red-500"></i>
+            </div>
+            <span class="text-xs text-gray-700">Email</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="app-icon mb-1" style="width:3.5rem; height:3.5rem; cursor:pointer;" onclick="showNotification('WhatsApp')">
+              <i class="fab fa-whatsapp text-green-500"></i>
+            </div>
+            <span class="text-xs text-gray-700">WhatsApp</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="app-icon mb-1" style="width:3.5rem; height:3.5rem; cursor:pointer;" onclick="showNotification('Camera')">
+              <i class="fas fa-camera text-gray-700"></i>
+            </div>
+            <span class="text-xs text-gray-700">Camera</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function showNotification(appName) {
+        // Simple notification using alert, can be replaced with custom UI
+        alert(appName + " launched!");
+      }
+    </script>
+
+    <!-- Scrollable Categories -->
+    <div class="flex-1 overflow-y-auto px-4 mt-4 space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+
+        <!-- Social -->
+        <div class="category-block bg-gray-100 p-2 rounded-2xl shadow-inner">
+          <div class="grid grid-cols-3 gap-2 mb-2">
+            <div class="app-icon"><i class="fab fa-facebook-f text-blue-600"></i></div>
+            <div class="app-icon"><i class="fab fa-instagram text-pink-500"></i></div>
+            <div class="app-icon"><i class="fab fa-x-twitter text-black"></i></div>
+            <div class="app-icon"><i class="fab fa-linkedin-in text-blue-700"></i></div>
+            <div class="app-icon"><i class="fab fa-snapchat-ghost text-yellow-500"></i></div>
+            <div class="app-icon"><i class="fab fa-reddit-alien text-orange-500"></i></div>
+          </div>
+          <div class="text-center text-sm font-semibold">Social</div>
+        </div>
+
+        <!-- Chat -->
+        <div class="category-block bg-gray-100 p-2 rounded-2xl shadow-inner">
+          <div class="grid grid-cols-3 gap-2 mb-2">
+            <div class="app-icon"><i class="fab fa-whatsapp text-green-500"></i></div>
+            <div class="app-icon"><i class="fab fa-telegram-plane text-blue-500"></i></div>
+            <div class="app-icon"><i class="fab fa-facebook-messenger text-blue-400"></i></div>
+            <div class="app-icon"><i class="fab fa-discord text-indigo-600"></i></div>
+            <div class="app-icon"><i class="fas fa-comment-dots text-gray-700"></i></div>
+            <div class="app-icon"><i class="fab fa-weixin text-green-600"></i></div>
+          </div>
+          <div class="text-center text-sm font-semibold">Chat</div>
+        </div>
+
+        <!-- Productivity -->
+        <div class="category-block bg-gray-100 p-2 rounded-2xl shadow-inner">
+          <div class="grid grid-cols-3 gap-2 mb-2">
+            <div class="app-icon"><i class="far fa-calendar-alt text-indigo-600"></i></div>
+            <div class="app-icon"><i class="fas fa-sticky-note text-yellow-500"></i></div>
+            <div class="app-icon"><i class="fas fa-check-circle text-green-600"></i></div>
+            <div class="app-icon"><i class="fas fa-clipboard-list text-orange-500"></i></div>
+            <div class="app-icon"><i class="fas fa-briefcase text-teal-600"></i></div>
+            <div class="app-icon"><i class="fas fa-file-alt text-gray-800"></i></div>
+          </div>
+          <div class="text-center text-sm font-semibold">Productivity</div>
+        </div>
+
+        <!-- Media -->
+        <div class="category-block bg-gray-100 p-2 rounded-2xl shadow-inner">
+          <div class="grid grid-cols-3 gap-2 mb-2">
+            <div class="app-icon"><i class="fab fa-youtube text-red-600"></i></div>
+            <div class="app-icon"><i class="fab fa-spotify text-green-500"></i></div>
+            <div class="app-icon"><i class="fas fa-tv text-purple-600"></i></div>
+            <div class="app-icon"><i class="fas fa-camera text-gray-600"></i></div>
+            <div class="app-icon"><i class="fas fa-image text-blue-500"></i></div>
+            <div class="app-icon"><i class="fas fa-video text-red-500"></i></div>
+          </div>
+          <div class="text-center text-sm font-semibold">Media</div>
+        </div>
+
+        <!-- Games -->
+        <div class="category-block bg-gray-100 p-2 rounded-2xl shadow-inner">
+          <div class="grid grid-cols-3 gap-2 mb-2">
+            <div class="app-icon"><i class="fas fa-gamepad text-black"></i></div>
+            <div class="app-icon"><i class="fas fa-chess-knight text-indigo-500"></i></div>
+            <div class="app-icon"><i class="fas fa-dice text-green-600"></i></div>
+          </div>
+          <div class="text-center text-sm font-semibold">Games</div>
+        </div>
+
+        <!-- Finance -->
+        <div class="category-block bg-gray-100 rounded-2xl shadow-inner">
+          <div class="grid grid-cols-2 gap-2 mb-2">
+            <div class="app-icon"><i class="fas fa-wallet text-amber-700"></i></div>
+            <div class="app-icon"><i class="fas fa-chart-line text-emerald-600"></i></div>
+          </div>
+          <div class="text-center text-sm font-semibold">Finance</div>
+        </div>
+
+        <!-- News & Reading -->
+        <div class="col-span-2 bg-gray-100 p-2 rounded-2xl shadow-inner">
+          <div class="grid grid-cols-4 gap-2 mb-2">
+            <div class="app-icon"><i class="fas fa-newspaper text-blue-600"></i></div>
+            <div class="app-icon"><i class="fas fa-book-reader text-indigo-700"></i></div>
+            <div class="app-icon"><i class="fab fa-readme text-orange-600"></i></div>
+            <div class="app-icon"><i class="fas fa-book text-red-500"></i></div>
+          </div>
+          <div class="text-center text-sm font-semibold">News & Reading</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Menu -->
+    <div id="settingsMenu" class="submenu absolute bottom-24 left-4 bg-white rounded-lg shadow-lg p-3 space-y-2 z-10">
+      <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="alert('Change Wallpaper clicked')">🖼️ Change Wallpaper</button>
+      <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="alert('Auto-generate wallpaper clicked')">✨ Auto Generate</button>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="p-4 flex justify-between items-center border-t bg-white">
+      <button onclick="toggleSettingsMenu()" class="text-2xl"><i class="fas fa-cog"></i></button>
+      <button onclick="zoomIn()" class="text-2xl"><i class="fas fa-search-plus"></i></button>
+      <button onclick="zoomOut()" class="text-2xl"><i class="fas fa-search-minus"></i></button>
+    </div>
+  </div>
+
+  <script>
+    function toggleSettingsMenu() {
+      document.getElementById('settingsMenu').classList.toggle('active');
+    }
+
+    function zoomIn() {
+      alert("Zoom In clicked. You can implement zoom scaling here.");
+    }
+
+    function zoomOut() {
+      alert("Zoom Out clicked. You can implement zoom-out here.");
+    }
+  </script>
+</body>
+</html>
