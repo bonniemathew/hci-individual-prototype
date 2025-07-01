@@ -42,12 +42,12 @@
           <i class="fas fa-ellipsis-v text-gray-600 text-xl"></i>
         </button>
         <!-- Settings menu will be absolutely positioned to the left border below this button -->
-        <div id="settingsMenu" class="submenu absolute left-0 top-full mt-2 bg-white rounded-lg shadow-lg p-3 space-y-2 z-10 min-w-[200px]">
-          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="alert('Change Wallpaper clicked')">🖼️ Change Wallpaper</button>
-          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="alert('Auto-generate wallpaper clicked')">✨ Auto Generate</button>
-          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="zoomIn()">🔍 Zoom In (Pinch Gesture)</button>
-          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="zoomOut()">🔎 Zoom Out (Pinch Gesture)</button>
-          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="toggleColorPalette()">🎨 Change Background Color</button>
+        <div id="settingsMenu" class="submenu absolute left-0 top-full mt-2 bg-white rounded-lg shadow-lg p-3 space-y-2 z-10 min-w-[300px]">
+          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100 text-sm" onclick="alert('Change Wallpaper clicked')">🖼️ Change Wallpaper</button>
+          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100 text-sm" onclick="alert('Auto-generate wallpaper clicked')">✨ Auto Generate</button>
+          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100 text-sm" onclick="zoomIn()">🔍 Zoom In (Pinch Gesture)</button>
+          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100 text-sm" onclick="zoomOut()">🔎 Zoom Out (Pinch Gesture)</button>
+          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100 text-sm" onclick="toggleColorPalette()">🎨 Change Background Color</button>
             <div id="colorPalette" class="flex flex-col space-y-2 mt-2" style="display:none;">
               <div class="flex space-x-2">
                 <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fde68a" onclick="setBgColor('#fde68a')" title="#fde68a"></button> <!-- yellow -->
@@ -55,15 +55,15 @@
                 <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#bbf7d0" onclick="setBgColor('#bbf7d0')" title="#bbf7d0"></button> <!-- green -->
                 <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fca5a5" onclick="setBgColor('#fca5a5')" title="#fca5a5"></button> <!-- red -->
                 <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#f9a8d4" onclick="setBgColor('#f9a8d4')" title="#f9a8d4"></button> <!-- pink -->
-                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#f3e8ff" onclick="setBgColor('#f3e8ff')" title="#f3e8ff"></button> <!-- purple -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#9576b6" onclick="setBgColor('#9576b6')" title="#9576b6"></button> <!-- purple -->
               </div>
               <div class="flex space-x-2">
                 <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#a7f3d0" onclick="setBgColor('#a7f3d0')" title="#a7f3d0"></button> <!-- mint green -->
-                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fca5a5" onclick="setBgColor('#fca5a5')" title="#fca5a5"></button> <!-- soft red -->
-                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fdba74" onclick="setBgColor('#fdba74')" title="#fdba74"></button> <!-- peach -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#838c5a" onclick="setBgColor('#838c5a')" title="#838c5a"></button> <!-- soft red -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#f0e4d7" onclick="setBgColor('#f0e4d7')" title="#f0e4d7"></button> <!-- peach -->
                 <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fcd34d" onclick="setBgColor('#fcd34d')" title="#fcd34d"></button> <!-- gold -->
                 <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#c4b5fd" onclick="setBgColor('#c4b5fd')" title="#c4b5fd"></button> <!-- lavender -->
-                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#f9fafb" onclick="setBgColor('#f9fafb')" title="#f9fafb"></button> <!-- off white -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#515962" onclick="setBgColor('#515962')" title="#515962"></button> <!-- off white -->
               </div>
             </div>
         </div>
