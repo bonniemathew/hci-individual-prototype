@@ -32,13 +32,61 @@
   </style>
 </head>
 <body class="flex justify-center items-center min-h-screen">
-  <div class="w-[360px] h-[720px] bg-white bg-opacity-80 backdrop-blur-md rounded-[2rem] shadow-lg overflow-hidden flex flex-col relative">
+  <div id="mainContainer" class="w-[360px] h-[720px] bg-blue-100 bg-opacity-80 backdrop-blur-md rounded-[2rem] shadow-lg overflow-hidden flex flex-col relative">
 
     <!-- Search Bar -->
-    <div class="p-4">
-      <input id="searchBox" type="text" placeholder="Search" class="w-full p-2 rounded-lg border shadow-md" oninput="filterApps()" />
-      <div id="searchResults" class="mt-2"></div>
+    <div class="p-4 flex items-center space-x-2">
+      <!-- Settings Button on the left -->
+      <div class="relative">
+        <button onclick="toggleSettingsMenu()" aria-label="Settings" class="mr-2 p-2 rounded-full shadow hover:bg-gray-100 relative z-20" style="background: inherit;">
+          <i class="fas fa-ellipsis-v text-gray-600 text-xl"></i>
+        </button>
+        <!-- Settings menu will be absolutely positioned to the left border below this button -->
+        <div id="settingsMenu" class="submenu absolute left-0 top-full mt-2 bg-white rounded-lg shadow-lg p-3 space-y-2 z-10 min-w-[200px]">
+          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="alert('Change Wallpaper clicked')">🖼️ Change Wallpaper</button>
+          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="alert('Auto-generate wallpaper clicked')">✨ Auto Generate</button>
+          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="zoomIn()">🔍 Zoom In (Pinch Gesture)</button>
+          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="zoomOut()">🔎 Zoom Out (Pinch Gesture)</button>
+          <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="toggleColorPalette()">🎨 Change Background Color</button>
+            <div id="colorPalette" class="flex flex-col space-y-2 mt-2" style="display:none;">
+              <div class="flex space-x-2">
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fde68a" onclick="setBgColor('#fde68a')" title="#fde68a"></button> <!-- yellow -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#bae6fd" onclick="setBgColor('#bae6fd')" title="#bae6fd"></button> <!-- blue -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#bbf7d0" onclick="setBgColor('#bbf7d0')" title="#bbf7d0"></button> <!-- green -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fca5a5" onclick="setBgColor('#fca5a5')" title="#fca5a5"></button> <!-- red -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#f9a8d4" onclick="setBgColor('#f9a8d4')" title="#f9a8d4"></button> <!-- pink -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#f3e8ff" onclick="setBgColor('#f3e8ff')" title="#f3e8ff"></button> <!-- purple -->
+              </div>
+              <div class="flex space-x-2">
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#a7f3d0" onclick="setBgColor('#a7f3d0')" title="#a7f3d0"></button> <!-- mint green -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fca5a5" onclick="setBgColor('#fca5a5')" title="#fca5a5"></button> <!-- soft red -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fdba74" onclick="setBgColor('#fdba74')" title="#fdba74"></button> <!-- peach -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fcd34d" onclick="setBgColor('#fcd34d')" title="#fcd34d"></button> <!-- gold -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#c4b5fd" onclick="setBgColor('#c4b5fd')" title="#c4b5fd"></button> <!-- lavender -->
+                <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#f9fafb" onclick="setBgColor('#f9fafb')" title="#f9fafb"></button> <!-- off white -->
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- Searchbar on the right -->
+      <div class="flex-1">
+        <input id="searchBox" type="text" placeholder="Search" class="w-full p-2 rounded-lg border shadow-md" oninput="filterApps()" />
+      </div>
+      <script>
+        function toggleSettingsMenu() {
+          document.getElementById('settingsMenu').classList.toggle('active');
+        }
+        function toggleColorPalette() {
+          const palette = document.getElementById('colorPalette');
+          palette.style.display = palette.style.display === 'none' ? 'flex' : 'none';
+        }
+        function setBgColor(color) {
+          const container = document.getElementById('mainContainer');
+          container.style.background = color;
+        }
+      </script>
     </div>
+    <div id="searchResults" class="mt-2"></div>
     <script>
       // List of app names and icons (FontAwesome class)
       const apps = [
@@ -138,8 +186,23 @@
     </div>
     <script>
       function showNotification(appName) {
-        // Simple notification using alert, can be replaced with custom UI
-        alert(appName + " launched!");
+        // Remove any existing toast
+        const oldToast = document.getElementById('toastNotification');
+        if (oldToast) oldToast.remove();
+
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.id = 'toastNotification';
+        toast.className = 'fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-300';
+        toast.textContent = appName + " launched!";
+
+        document.body.appendChild(toast);
+
+        // Fade out and remove after 4 seconds
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 300);
+        }, 2000);
       }
     </script>
 
@@ -235,27 +298,75 @@
     <div id="settingsMenu" class="submenu absolute bottom-24 left-4 bg-white rounded-lg shadow-lg p-3 space-y-2 z-10">
       <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="alert('Change Wallpaper clicked')">🖼️ Change Wallpaper</button>
       <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="alert('Auto-generate wallpaper clicked')">✨ Auto Generate</button>
+      <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="zoomIn()">🔍 Zoom In</button>
+      <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="zoomOut()">🔎 Zoom Out</button>
+      <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" onclick="toggleColorPalette()">🎨 Change Background Color</button>
+      <div id="colorPalette" class="flex space-x-2 mt-2" style="display:none;">
+      <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fde68a" onclick="setBgColor('#fde68a')"></button>
+      <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#bae6fd" onclick="setBgColor('#bae6fd')"></button>
+      <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#bbf7d0" onclick="setBgColor('#bbf7d0')"></button>
+      <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#fef9c3" onclick="setBgColor('#fef9c3')"></button>
+      <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#ddd6fe" onclick="setBgColor('#ddd6fe')"></button>
+      <button class="w-6 h-6 rounded-full border-2 border-gray-300" style="background:#f3f4f6" onclick="setBgColor('#f3f4f6')"></button>
+      </div>
+      <script>
+      function toggleColorPalette() {
+        const palette = document.getElementById('colorPalette');
+        palette.style.display = palette.style.display === 'none' ? 'flex' : 'none';
+      }
+      function setBgColor(color) {
+        const container = document.getElementById('mainContainer');
+        container.style.background = color;
+      }
+      </script>
     </div>
+    <script>
+      let iconScale = 1;
+
+      function setAppIconScale() {
+        document.querySelectorAll('.app-icon').forEach(el => {
+          el.style.transform = `scale(${iconScale})`;
+          el.style.transition = 'transform 0.2s';
+        });
+      }
+
+      function zoomIn() {
+        iconScale = Math.min(iconScale + 0.1, 2);
+        setAppIconScale();
+      }
+
+      function zoomOut() {
+        iconScale = Math.max(iconScale - 0.1, 0.5);
+        setAppIconScale();
+      }
+
+      // Ensure scaling applies to dynamically added icons (e.g., search results)
+      const observer = new MutationObserver(setAppIconScale);
+      observer.observe(document.body, { childList: true, subtree: true });
+    </script>
+
+
 
     <!-- Bottom Bar -->
     <div class="p-4 flex justify-between items-center border-t bg-white">
-      <button onclick="toggleSettingsMenu()" class="text-2xl"><i class="fas fa-cog"></i></button>
-      <button onclick="zoomIn()" class="text-2xl"><i class="fas fa-search-plus"></i></button>
-      <button onclick="zoomOut()" class="text-2xl"><i class="fas fa-search-minus"></i></button>
+      <!-- Back Button -->
+      <button class="text-2xl" aria-label="Back">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <!-- Home Button -->
+      <button class="text-2xl" aria-label="Home">
+        <i class="fas fa-circle"></i>
+      </button>
+      <!-- Apps (Recent Apps) Button -->
+      <button class="text-2xl" aria-label="Recent Apps">
+        <i class="fas fa-square"></i>
+      </button>
     </div>
   </div>
 
   <script>
     function toggleSettingsMenu() {
       document.getElementById('settingsMenu').classList.toggle('active');
-    }
-
-    function zoomIn() {
-      alert("Zoom In clicked. You can implement zoom scaling here.");
-    }
-
-    function zoomOut() {
-      alert("Zoom Out clicked. You can implement zoom-out here.");
     }
   </script>
 </body>
